@@ -106,3 +106,23 @@ export const userSignOut = () => {
     }, 2000)
   }
 }
+
+export const getSettings = () => {
+  return dispatch => {
+    dispatch({type: FETCH_START})
+    axios
+      .post('settings')
+      .then(({data}) => {
+        console.log('settings: ', data)
+        if (data.settings) {
+          dispatch({type: FETCH_SUCCESS})
+        } else {
+          dispatch({type: FETCH_ERROR, payload: data.error})
+        }
+      })
+      .catch(function(error) {
+        dispatch({type: FETCH_ERROR, payload: error.message})
+        console.log('Error****:', error.message)
+      })
+  }
+}

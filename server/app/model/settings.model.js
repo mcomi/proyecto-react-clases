@@ -4,10 +4,19 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
       primaryKey: true,
     },
-    name: {
+    user_id: {
+      type: Sequelize.INTEGER,
+    },
+    navStyle: {
       type: Sequelize.STRING,
     },
-    descripcion: {
+    layoutType: {
+      type: Sequelize.STRING,
+    },
+    themeType: {
+      type: Sequelize.STRING,
+    },
+    colorSelection: {
       type: Sequelize.STRING,
     },
   })

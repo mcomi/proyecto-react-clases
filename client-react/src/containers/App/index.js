@@ -28,7 +28,7 @@ import {
   NAV_STYLE_INSIDE_HEADER_HORIZONTAL,
   THEME_TYPE_DARK,
 } from '../../constants/ThemeSetting'
-import {getUser} from '../../appRedux/actions/Auth'
+import {getUser, getSettings} from '../../appRedux/actions/Auth'
 
 const RestrictedRoute = ({component: Component, token, ...rest}) => (
   <Route
@@ -99,11 +99,11 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.token) {
-      debugger
       axios.defaults.headers.common['access-token'] = nextProps.token
     }
     if (nextProps.token && !nextProps.authUser) {
       this.props.getUser()
+      this.props.getSettings()
     }
   }
 
@@ -163,5 +163,12 @@ const mapStateToProps = ({settings, auth}) => {
 }
 export default connect(
   mapStateToProps,
-  {setInitUrl, getUser, setThemeType, onNavStyleChange, onLayoutTypeChange},
+  {
+    setInitUrl,
+    getUser,
+    getSettings,
+    setThemeType,
+    onNavStyleChange,
+    onLayoutTypeChange,
+  },
 )(App)

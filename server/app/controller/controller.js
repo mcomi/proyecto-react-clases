@@ -2,6 +2,7 @@ const db = require('../config/db.config.js')
 const config = require('../config/config.js')
 const User = db.user
 const Role = db.role
+const Settings = db.settings
 
 const Op = db.Sequelize.Op
 
@@ -63,7 +64,7 @@ exports.signin = (req, res) => {
         expiresIn: 86400, // expires in 24 hours
       })
 
-      res.status(200).send({auth: true, accessToken: token, user})
+      res.status(200).send({auth: true, accessToken: token})
     })
     .catch(err => {
       res.status(500).send('Error -> ' + err)
@@ -74,7 +75,7 @@ exports.userContent = (req, res) => {
   console.log('Buscando info usuario: ' + req)
   User.findOne({
     where: {id: req.userId},
-    attributes: ['name', 'username', 'email'],
+    attributes: ['name', 'username'],
     include: [
       {
         model: Role,
@@ -94,6 +95,23 @@ exports.userContent = (req, res) => {
     .catch(err => {
       res.status(500).json({
         description: 'Can not access User Page',
+        error: err,
+      })
+    })
+}
+
+exports.getSettings = (req, res) => {
+  Settings.findOne({
+    where: {user_id: req.userId},
+  })
+    .then(settings => {
+      res.status(200).json({
+        settings,
+      })
+    })
+    .catch(err => {
+      res.status(500).json({
+        description: 'No encontre settings',
         error: err,
       })
     })

@@ -17,11 +17,12 @@ require('./app/router/router.js')(app)
 const db = require('./app/config/db.config.js')
 
 const Role = db.role
+const Settings = db.settings
 
 // force: true will drop the table if it already exists
-db.sequelize.sync({force: false}).then(() => {
+db.sequelize.sync({force: true}).then(() => {
   console.log('Drop and Resync with { force: false }')
-  //initial()
+  initial()
 })
 
 //require('./app/route/project.route.js')(app);
@@ -48,5 +49,14 @@ function initial() {
   Role.create({
     id: 3,
     name: 'PM',
+  })
+
+  Settings.create({
+    id: 1,
+    user_id: 1,
+    navStyle: 'NAV_STYLE_DRAWER',
+    layoutType: 'LAYOUT_TYPE_BOXED',
+    themeType: 'THEME_TYPE_LITE',
+    colorSelection: 'THEME_COLOR_SELECTION_CUSTOMIZE',
   })
 }

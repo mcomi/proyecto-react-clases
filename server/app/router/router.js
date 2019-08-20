@@ -19,6 +19,9 @@ module.exports = function(app) {
 
   app.post('/auth/me', [authJwt.verifyToken], controller.userContent)
 
+  // cargar settings
+  app.post('/settings', [authJwt.verifyToken], controller.getSettings)
+
   app.get(
     '/test/pm',
     [authJwt.verifyToken, authJwt.isPmOrAdmin],
