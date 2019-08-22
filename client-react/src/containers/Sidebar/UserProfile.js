@@ -2,6 +2,9 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Avatar, Popover} from "antd";
 import {userSignOut} from "appRedux/actions/Auth";
+import {Link} from "react-router-dom";
+import IntlMessages from "../../util/IntlMessages";
+
 
 class UserProfile extends Component {
 
@@ -9,7 +12,11 @@ class UserProfile extends Component {
     const {authUser} = this.props;
     const userMenuOptions = (
       <ul className="gx-user-popover">
-        <li>My Account</li>
+        <li>
+          <Link to="/perfil">
+            <IntlMessages id="menu.perfil"/>
+          </Link>
+        </li>
         <li>Connections</li>
         <li onClick={() => this.props.userSignOut()}>Logout
         </li>

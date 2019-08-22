@@ -41,7 +41,7 @@ class SignIn extends React.Component {
                   <IntlMessages id='app.userAuth.signIn' />
                 </h1>
                 <p>
-                  <IntlMessages id='app.userAuth.bySigning' />
+                  <IntlMessages id='login.info' />
                 </p>
                 <p>
                   <IntlMessages id='app.userAuth.getAccount' />

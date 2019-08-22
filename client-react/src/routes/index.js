@@ -7,7 +7,9 @@ const App = ({match}) => (
   <div className="gx-main-content-wrapper">
     <Switch>
       <Route path={`${match.url}sample`} component={asyncComponent(() => import('./SamplePage'))}/>
-    </Switch>
+      <Route path={`${match.url}inicio`} component={asyncComponent(() => import('./Inicio'))}/>
+      <Route path={`${match.url}perfil`} component={asyncComponent(() => import('./Perfil'))}/>
+    </Switch> 
   </div>
 );
 
