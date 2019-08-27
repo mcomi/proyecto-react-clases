@@ -9,7 +9,11 @@ import {
   SHOW_MESSAGE,
 } from '../../constants/ActionTypes'
 import axios from 'util/Api'
-
+import {
+  onLayoutTypeChange,
+  onNavStyleChange,
+  setThemeType,
+} from 'appRedux/actions/Setting'
 export const setInitUrl = url => {
   return {
     type: INIT_URL,
@@ -116,6 +120,7 @@ export const getSettings = () => {
         console.log('settings: ', data)
         if (data.settings) {
           dispatch({type: FETCH_SUCCESS})
+          setThemeType(data.settings.themeType)
         } else {
           dispatch({type: FETCH_ERROR, payload: data.error})
         }
