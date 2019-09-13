@@ -14,10 +14,11 @@ import ProfileHeader from '../../components/profile/ProfileHeader/index'
 
 import IntlMessages from 'util/IntlMessages'
 
+
 class Perfil extends Component {
   constructor(props) {
     console.log('1. Constructor: ')
-    super(props)
+    super(props);
     this.state = {
       loading: false,
       error: null,
@@ -32,6 +33,10 @@ class Perfil extends Component {
     console.log('3. componentDidMount')
     // llamar un api o cualquier metodo que te traiga datos
     // authUser.id
+
+    //---
+  
+    //---
   }
 
   getSalary = () => {

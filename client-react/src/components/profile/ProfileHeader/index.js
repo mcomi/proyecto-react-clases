@@ -18,7 +18,7 @@ const ProfileHeader = props => {
             </div>
             <div className='gx-profile-banner-avatar-info'>
               <h2 className='gx-mb-2 gx-mb-sm-3 gx-fs-xxl gx-font-weight-light'>
-                {authUser.name}
+                xxxx
               </h2>
               <p className='gx-mb-0 gx-fs-lg'>Florida, USA</p>
             </div>
