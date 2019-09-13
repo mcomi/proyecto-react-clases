@@ -17,6 +17,7 @@ require('./app/router/router.js')(app)
 const db = require('./app/config/db.config.js')
 
 const Role = db.role
+const User = db.user
 const Settings = db.settings
 
 // force: true will drop the table if it already exists
@@ -58,5 +59,15 @@ function initial() {
     layoutType: 'LAYOUT_TYPE_BOXED',
     themeType: 'THEME_TYPE_LITE',
     colorSelection: 'THEME_COLOR_SELECTION_CUSTOMIZE',
+  })
+
+  User.create({
+    id: 1,
+    name: 'MAnuel',
+    username: 'manuel',
+    password: '$2a$08$AgpEFUJ3iNZoE0FJwnojIeZLL80s6W4nYKt4YXo9lcj3TsPtT4E.C',
+    email: 'manuel@mail.com',
+    direccion: 'Circuitoi MArio de la cueva',
+    telefono: '55 56 22 48 00',
   })
 }

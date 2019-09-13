@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import React, {useEffect, useState} from 'react'
+import {connect} from 'react-redux'
 import {Col, Row} from 'antd'
 import About from '../../components/profile/About/index'
 import Biography from '../../components/profile/Biography/index'
@@ -14,106 +15,61 @@ import ProfileHeader from '../../components/profile/ProfileHeader/index'
 
 import IntlMessages from 'util/IntlMessages'
 
-
-class Perfil extends Component {
-  constructor(props) {
-    console.log('1. Constructor: ')
-    super(props);
-    this.state = {
-      loading: false,
-      error: null,
-      data: undefined,
-    }
-  }
-
-  componentWillMount() {
-    console.log('component will mount')
-  }
-  componentDidMount() {
-    console.log('3. componentDidMount')
-    // llamar un api o cualquier metodo que te traiga datos
-    // authUser.id
-
-    //---
-  
-    //---
-  }
-
-  getSalary = () => {
+const Perfil = ({authUser}) => {
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
+  const [datos, setDatos] = useState({})
+  console.log(authUser)
+  const getSalary = () => {
     // fetch('http://miapi/salary/'+${authUser.id}).then(function(data){
     // })
   }
-  componentDidUpdate(prevProps, prevState) {
-    console.log('4. componentDidUpdate')
-    console.log({
-      prevProps: prevProps,
-      prevState: prevState,
-    })
-    console.log({
-      props: this.props,
-      state: this.state,
-    })
+
+  const printData = () => {
+    console.log(datos)
   }
 
-  componentWillUnmount() {
-    console.log('5.componentWillUnmount')
-  }
-
-  render() {
-    console.log('2. Render')
-    if (this.state.loading === true) {
-      return (
-        <div>
-          <h2 className='title gx-mb-4'>
-            <IntlMessages id='sidebar.samplePage' />
-          </h2>
-
-          <div className='gx-d-flex justify-content-center'>
-            <h4>Cargando...</h4>
-          </div>
-        </div>
-      )
+  useEffect(() => {
+    var dataFromService = {
+      prop1: 'algo',
+      prop2: 'prop 2',
     }
 
-    if (this.state.error) {
-      return `Error:' ${this.state.error}`
-    }
-    /*if (this.state.data.length === 0) {
-        return (
-          <div>
-            <h3>No hay registros</h3>
-            
-          </div>
-        );
-      }*/
+    setDatos(dataFromService)
+    printData()
+  }, [])
 
-    return (
-      <Auxiliary>
-        <ProfileHeader />
-        <div className='gx-profile-content'>
-          <Row>
-            <Col xl={16} lg={14} md={14} sm={24} xs={24}>
-              <About />
-              <Biography />
-              <Events />
-            </Col>
+  return (
+    <Auxiliary>
+      <ProfileHeader name={authUser.name} />
+      <div className='gx-profile-content'>
+        <Row>
+          <Col xl={16} lg={14} md={14} sm={24} xs={24}>
+            <About {...authUser} />
+            <Biography />
+            <Events />
+          </Col>
 
-            <Col xl={8} lg={10} md={10} sm={24} xs={24}>
-              <Contact />
-              <Row>
-                <Col xl={24} lg={24} md={24} sm={12} xs={24}>
-                  <Friends friendList={friendList} />
-                </Col>
-                <Col xl={24} lg={24} md={24} sm={12} xs={24}>
-                  <Photos photoList={photoList} />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </div>
-      </Auxiliary>
-    )
-  }
+          <Col xl={8} lg={10} md={10} sm={24} xs={24}>
+            <Contact />
+            <Row>
+              <Col xl={24} lg={24} md={24} sm={12} xs={24}>
+                <Friends friendList={friendList} />
+              </Col>
+              <Col xl={24} lg={24} md={24} sm={12} xs={24}>
+                <Photos photoList={photoList} />
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </div>
+    </Auxiliary>
+  )
 }
 
-export default Perfil
+const mapStateToProps = ({auth}) => {
+  const {authUser} = auth
+  return {authUser}
+}
+
+export default connect(mapStateToProps)(Perfil)

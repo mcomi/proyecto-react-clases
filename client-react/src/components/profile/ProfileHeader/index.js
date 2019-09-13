@@ -1,9 +1,7 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import {Avatar} from 'antd'
 
-const ProfileHeader = props => {
-  const {authUser} = props
+const ProfileHeader = ({name}) => {
   return (
     <div className='gx-profile-banner'>
       <div className='gx-profile-container'>
@@ -18,7 +16,7 @@ const ProfileHeader = props => {
             </div>
             <div className='gx-profile-banner-avatar-info'>
               <h2 className='gx-mb-2 gx-mb-sm-3 gx-fs-xxl gx-font-weight-light'>
-                xxxx
+                {name}
               </h2>
               <p className='gx-mb-0 gx-fs-lg'>Florida, USA</p>
             </div>
@@ -80,9 +78,4 @@ const ProfileHeader = props => {
   )
 }
 
-const mapStateToProps = ({auth}) => {
-  const {authUser} = auth
-  return {authUser}
-}
-
-export default connect(mapStateToProps)(ProfileHeader)
+export default ProfileHeader

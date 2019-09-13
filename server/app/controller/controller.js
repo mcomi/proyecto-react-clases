@@ -75,16 +75,16 @@ exports.userContent = (req, res) => {
   console.log('Buscando info usuario: ' + req)
   User.findOne({
     where: {id: req.userId},
-    attributes: ['name', 'username'],
-    include: [
-      {
-        model: Role,
-        attributes: ['id', 'name'],
-        through: {
-          attributes: ['userId', 'roleId'],
-        },
-      },
-    ],
+    attributes: ['name', 'username', 'email', 'direccion', 'telefono'],
+    // include: [
+    //   {
+    //     model: Role,
+    //     attributes: ['id', 'name'],
+    //     through: {
+    //       attributes: ['userId', 'roleId'],
+    //     },
+    //   },
+    // ],
   })
     .then(user => {
       res.status(200).json({

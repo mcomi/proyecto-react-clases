@@ -1,10 +1,10 @@
 const env = {
-  database: 'react_proyecto1_clases',
+  database: 'testdb',
   username: 'root',
-  password: 'root',
+  password: 'pase14792',
   host: 'localhost',
   dialect: 'mysql',
-  //port: 14792,
+  port: 14792,
   pool: {
     max: 5,
     min: 0,
