@@ -1,13 +1,14 @@
 import React from 'react'
 import {Avatar} from 'antd'
 
-const ProfileHeader = ({name}) => {
+const ProfileHeader = ({name, getDataFromService, settings}) => {
   return (
     <div className='gx-profile-banner'>
       <div className='gx-profile-container'>
         <div className='gx-profile-banner-top'>
           <div className='gx-profile-banner-top-left'>
             <div className='gx-profile-banner-avatar'>
+              {settings && <h1>Ya tengo setting</h1>}
               <Avatar
                 className='gx-size-90'
                 alt='...'
@@ -68,7 +69,10 @@ const ProfileHeader = ({name}) => {
           </div>
           <span className='gx-link gx-profile-setting'>
             <i className='icon icon-setting gx-fs-lg gx-mr-2 gx-mr-sm-3 gx-d-inline-flex gx-vertical-align-middle' />
-            <span className='gx-d-inline-flex gx-vertical-align-middle gx-ml-1 gx-ml-sm-0'>
+            <span
+              className='gx-d-inline-flex gx-vertical-align-middle gx-ml-1 gx-ml-sm-0'
+              onClick={getDataFromService}
+            >
               Setting
             </span>
           </span>

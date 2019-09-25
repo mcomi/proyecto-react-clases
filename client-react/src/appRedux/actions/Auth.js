@@ -8,7 +8,7 @@ import {
   USER_TOKEN_SET,
   SHOW_MESSAGE,
 } from '../../constants/ActionTypes'
-import axios from 'util/Api'
+import {apiLogin} from 'util/Api'
 import {
   onLayoutTypeChange,
   onNavStyleChange,
@@ -25,7 +25,7 @@ export const userSignUp = ({email, password, name, username}) => {
   console.log(email, password)
   return dispatch => {
     dispatch({type: FETCH_START})
-    axios
+    apiLogin
       .post('auth/signup', {
         email: email,
         password: password,
@@ -55,7 +55,7 @@ export const userSignUp = ({email, password, name, username}) => {
 export const userSignIn = ({username, password}) => {
   return dispatch => {
     dispatch({type: FETCH_START})
-    axios
+    apiLogin
       .post('auth/login', {
         username: username,
         password: password,
@@ -64,7 +64,7 @@ export const userSignIn = ({username, password}) => {
         console.log('userSignIn: ', data)
         if (data.auth) {
           localStorage.setItem('token', JSON.stringify(data.accessToken))
-          axios.defaults.headers.common['access-token'] = data.accessToken
+          apiLogin.defaults.headers.common['access-token'] = data.accessToken
           dispatch({type: FETCH_SUCCESS})
           dispatch({type: USER_TOKEN_SET, payload: data.accessToken})
           dispatch()
@@ -82,7 +82,7 @@ export const userSignIn = ({username, password}) => {
 export const getUser = () => {
   return dispatch => {
     dispatch({type: FETCH_START})
-    axios
+    apiLogin
       .post('auth/me')
       .then(({data}) => {
         console.log('userSignIn: ', data)
@@ -114,7 +114,7 @@ export const userSignOut = () => {
 export const getSettings = () => {
   return dispatch => {
     dispatch({type: FETCH_START})
-    axios
+    apiLogin
       .post('settings')
       .then(({data}) => {
         console.log('settings: ', data)

@@ -12,46 +12,79 @@ import Friends from '../../components/profile/Friends/index'
 import Photos from '../../components/profile/Photos/index'
 import Auxiliary from '../../util/Auxiliary'
 import ProfileHeader from '../../components/profile/ProfileHeader/index'
+import {
+  getAdvisorDetail,
+  getObjetivosFromAdvisorByYear,
+} from '../../api/advisors'
 
 import IntlMessages from 'util/IntlMessages'
 
-const Perfil = ({authUser}) => {
+const Perfil = props => {
+  const {authUser} = props
+  console.log(authUser)
+  const initialAdvisor = {
+    first_name: 'Advisor',
+    last_name: 'Demo',
+    email: 'email',
+  }
+  const {username} = props.match.params
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
-  const [datos, setDatos] = useState({})
-  console.log(authUser)
-  const getSalary = () => {
-    // fetch('http://miapi/salary/'+${authUser.id}).then(function(data){
-    // })
+  const [settings, setSettings] = useState(null)
+  const [advisor, setAdvisor] = useState(initialAdvisor)
+  const [objetivos, setObjetivos] = useState(null)
+  const [hasObjetivos, setHasObjetivos] = useState(false)
+  const [anioObjetivos, setAnioObjetivos] = useState('2019')
+
+  const getAdvisor = async () => {
+    try {
+      const data = await getAdvisorDetail(username)
+      if (data) setAdvisor(data)
+    } catch (error) {}
   }
 
-  const printData = () => {
-    console.log(datos)
+  const handleYearChange = anio => {
+    setAnioObjetivos(anio)
+  }
+
+  const getObjetivosPorAnio = async () => {
+    try {
+      const cvl = advisor.username
+      const data = await getObjetivosFromAdvisorByYear(cvl, anioObjetivos)
+      if (data.length > 0) {
+        setObjetivos(data[0])
+        setHasObjetivos(true)
+      } else {
+        alert('No hay datos para ese año')
+      }
+    } catch (error) {}
   }
 
   useEffect(() => {
-    var dataFromService = {
-      prop1: 'algo',
-      prop2: 'prop 2',
-    }
-
-    setDatos(dataFromService)
-    printData()
+    getAdvisor()
   }, [])
 
   return (
     <Auxiliary>
-      <ProfileHeader name={authUser.name} />
+      <ProfileHeader name={`${advisor.first_name} ${advisor.last_name}`} />
       <div className='gx-profile-content'>
         <Row>
           <Col xl={16} lg={14} md={14} sm={24} xs={24}>
-            <About {...authUser} />
-            <Biography />
+            <About
+              advisor={advisor}
+              getObjetivosPorAnio={getObjetivosPorAnio}
+              handleYearChange={handleYearChange}
+            />
+            {hasObjetivos && <Biography objetivos={objetivos} />}
             <Events />
           </Col>
 
           <Col xl={8} lg={10} md={10} sm={24} xs={24}>
-            <Contact />
+            <Contact
+              email={advisor.email}
+              phone={advisor.phone}
+              code={advisor.calling_code}
+            />
             <Row>
               <Col xl={24} lg={24} md={24} sm={12} xs={24}>
                 <Friends friendList={friendList} />

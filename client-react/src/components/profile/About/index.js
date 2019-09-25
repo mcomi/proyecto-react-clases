@@ -1,12 +1,17 @@
 import React from 'react'
-import {Col, Row, Tabs} from 'antd'
+import {Col, Row, Tabs, Button, Select} from 'antd'
 import Widget from 'components/Widget'
 import {aboutList} from '../../../routes/Perfil/data'
 import AboutItem from './AboutItem'
 
 const TabPane = Tabs.TabPane
+const {Option, OptGroup} = Select
 
-const About = ({direccion, email, telefono}) => {
+const About = ({advisor, handleYearChange, getObjetivosPorAnio}) => {
+  const handleChange = value => {
+    handleYearChange(value)
+  }
+
   return (
     <Widget
       title='About'
@@ -17,7 +22,24 @@ const About = ({direccion, email, telefono}) => {
           <div className='gx-mb-2'>
             <Row>
               <Col xl={8} lg={12} md={12} sm={12} xs={24}>
-                <AboutItem data={direccion} />
+                <AboutItem advisor={advisor} />
+              </Col>
+              <Col>
+                <Select
+                  defaultValue='2019'
+                  style={{width: 100}}
+                  onChange={handleChange}
+                >
+                  <Option value='2018'>2018</Option>
+                  <Option value='2017'>2017</Option>
+                </Select>
+                <Button
+                  variant='raised'
+                  className='jr-btn bg-cyan text-white'
+                  onClick={getObjetivosPorAnio}
+                >
+                  Ver Objetivos
+                </Button>
               </Col>
             </Row>
           </div>

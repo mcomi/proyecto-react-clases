@@ -1,79 +1,69 @@
-import React, { Component } from "react";
+import React, {useEffect, useState} from 'react'
+import {Card, Divider, Icon, Table} from 'antd'
+import {Link} from 'react-router-dom'
 
-import IntlMessages from "util/IntlMessages";
+import {getAdvisors} from '../../api/advisors'
 
-class SamplePage extends Component {
-    
-    
-    constructor(props) {
-      console.log('1. Constructor');
-      super(props)
-        this.state = {
-          loading: false,
-          error: null,
-          data: undefined,
-        };
-    }  
-  
-    componentDidMount() {
-      console.log('3. componentDidMount');
-    }
-  
-    componentDidUpdate(prevProps, prevState) {
-      console.log('4. componentDidUpdate');
-      console.log({
-          prevProps: prevProps,
-          prevState: prevState
-      });
-      console.log({
-          props: this.props,
-          state: this.state
-      })
-    }
-  
-    
-    componentWillUnmount() {
-        console.log('5.componentWillUnmount');
-    }
-  
-    render() {
-      console.log('2. Render');
-      if (this.state.loading === true) {
-        return (
-            <div>
-                <h2 className="title gx-mb-4"><IntlMessages id="sidebar.samplePage"/></h2>
-    
-                <div className="gx-d-flex justify-content-center">
-                    <h4>Cargando...</h4>
-                </div>
-    
-            </div>
-        );
-      }
-  
-      if (this.state.error) {
-        return `Error:' ${this.state.error}`;
-      }
-      /*if (this.state.data.length === 0) {
-        return (
-          <div>
-            <h3>No hay registros</h3>
-            
-          </div>
-        );
-      }*/
-  
-      return (
-        <div>
-            <h2 className="title gx-mb-4"><IntlMessages id="sidebar.samplePage"/></h2>
+import IntlMessages from 'util/IntlMessages'
 
-            <div className="gx-d-flex justify-content-center">
-                <h4>Start building your app. Happy Coding!</h4>
-            </div>
+const SamplePage = () => {
+  const [advisors, setAdvisors] = useState([])
 
-        </div>
-      );
+  const loadAdvisors = async () => {
+    try {
+      const listAdvisors = await getAdvisors()
+      setAdvisors(listAdvisors)
+    } catch (error) {
+      console.log(error)
     }
   }
-  
-  export default SamplePage;
+
+  useEffect(() => {
+    loadAdvisors()
+  }, [])
+
+  const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'Username',
+      dataIndex: 'username',
+      key: 'username',
+      render: text => (
+        <Link to={`/advisor/${text}`} className='gx-link'>
+          {text}
+        </Link>
+      ),
+    },
+    {
+      title: 'Firstname',
+      dataIndex: 'first_name',
+      key: 'first_name',
+    },
+    {
+      title: 'Lastname',
+      dataIndex: 'last_name',
+      key: 'last_name',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+  ]
+
+  return (
+    <Card title='Advisors'>
+      <Table
+        className='gx-table-responsive'
+        columns={columns}
+        dataSource={advisors}
+      />
+    </Card>
+  )
+}
+
+export default SamplePage

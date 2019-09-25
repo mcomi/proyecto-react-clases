@@ -15,7 +15,7 @@ import {
   onNavStyleChange,
   setThemeType,
 } from 'appRedux/actions/Setting'
-import axios from 'util/Api'
+import {apiLogin} from 'util/Api'
 
 import {
   LAYOUT_TYPE_BOXED,
@@ -99,7 +99,7 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.token) {
-      axios.defaults.headers.common['access-token'] = nextProps.token
+      apiLogin.defaults.headers.common['access-token'] = nextProps.token
     }
     if (nextProps.token && !nextProps.authUser) {
       this.props.getUser()
