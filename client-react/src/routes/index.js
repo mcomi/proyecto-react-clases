@@ -22,6 +22,10 @@ const App = ({match}) => (
         path={`${match.url}perfil`}
         component={asyncComponent(() => import('./Perfil'))}
       />
+      <Route
+        path={`${match.url}zonas`}
+        component={asyncComponent(() => import('./Zonas'))}
+      />
     </Switch>
   </div>
 )

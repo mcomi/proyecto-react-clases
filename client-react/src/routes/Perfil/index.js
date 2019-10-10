@@ -8,13 +8,14 @@ import Contact from '../../components/profile/Contact/index'
 
 import {friendList} from './data'
 import {photoList} from './Wall/data'
-import Friends from '../../components/profile/Friends/index'
+import Cartera from '../../components/profile/Cartera/index'
 import Photos from '../../components/profile/Photos/index'
 import Auxiliary from '../../util/Auxiliary'
 import ProfileHeader from '../../components/profile/ProfileHeader/index'
 import {
   getAdvisorDetail,
   getObjetivosFromAdvisorByYear,
+  getVolumenCarteraPorCvl,
 } from '../../api/advisors'
 
 import IntlMessages from 'util/IntlMessages'
@@ -35,11 +36,32 @@ const Perfil = props => {
   const [objetivos, setObjetivos] = useState(null)
   const [hasObjetivos, setHasObjetivos] = useState(false)
   const [anioObjetivos, setAnioObjetivos] = useState('2019')
+  const [volumenCartera, setVolumenCartera] = useState([])
+  const [volumenCarteraOnload, setVolumenCarteraOnload] = useState([])
 
   const getAdvisor = async () => {
     try {
       const data = await getAdvisorDetail(username)
-      if (data) setAdvisor(data)
+      if (data) {
+        setAdvisor(data)
+        loadVolumenCarteraPorCvlOnLoad(data.username)
+      }
+    } catch (error) {}
+  }
+
+  const loadVolumenCarteraPorCvl = async () => {
+    try {
+      const cvl = advisor.username
+      const data = await getVolumenCarteraPorCvl(cvl)
+      if (data) setVolumenCartera(data)
+    } catch (error) {}
+  }
+
+  const loadVolumenCarteraPorCvlOnLoad = async cvl => {
+    try {
+      const data = await getVolumenCarteraPorCvl(cvl)
+      console.log(data)
+      if (data) setVolumenCarteraOnload(data)
     } catch (error) {}
   }
 
@@ -74,6 +96,7 @@ const Perfil = props => {
               advisor={advisor}
               getObjetivosPorAnio={getObjetivosPorAnio}
               handleYearChange={handleYearChange}
+              loadVolumenCarteraPorCvl={loadVolumenCarteraPorCvl}
             />
             {hasObjetivos && <Biography objetivos={objetivos} />}
             <Events />
@@ -87,10 +110,17 @@ const Perfil = props => {
             />
             <Row>
               <Col xl={24} lg={24} md={24} sm={12} xs={24}>
-                <Friends friendList={friendList} />
+                {volumenCartera.length > 0 && (
+                  <Cartera volumenCartera={volumenCartera} />
+                )}
               </Col>
               <Col xl={24} lg={24} md={24} sm={12} xs={24}>
                 <Photos photoList={photoList} />
+              </Col>
+              <Col xl={24} lg={24} md={24} sm={12} xs={24}>
+                {volumenCarteraOnload.length > 0 && (
+                  <Cartera volumenCartera={volumenCarteraOnload} />
+                )}
               </Col>
             </Row>
           </Col>

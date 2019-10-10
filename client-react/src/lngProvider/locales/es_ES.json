@@ -304,12 +304,12 @@
   "sidebar.extensions.profile": "Perfil",
   "sidebar.social": "Aplicaciones sociales",
 
-
-  "******PAG. LOGIN*******":"",
-  "login.info":"Texto de bienvenida",
-  "*********************":"",
-  "******** MENU *******":"",
+  "******PAG. LOGIN*******": "",
+  "login.info": "Texto de bienvenida",
+  "*********************": "",
+  "******** MENU *******": "",
   "menu.inicio": "Inicio",
   "menu.perfil": "Mi perfil",
-  "********************":""
+  "menu.zonas": "Zonas",
+  "********************": ""
 }

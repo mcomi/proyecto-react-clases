@@ -7,7 +7,12 @@ import AboutItem from './AboutItem'
 const TabPane = Tabs.TabPane
 const {Option, OptGroup} = Select
 
-const About = ({advisor, handleYearChange, getObjetivosPorAnio}) => {
+const About = ({
+  advisor,
+  handleYearChange,
+  getObjetivosPorAnio,
+  loadVolumenCarteraPorCvl,
+}) => {
   const handleChange = value => {
     handleYearChange(value)
   }
@@ -24,6 +29,8 @@ const About = ({advisor, handleYearChange, getObjetivosPorAnio}) => {
               <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                 <AboutItem advisor={advisor} />
               </Col>
+            </Row>
+            <Row>
               <Col>
                 <Select
                   defaultValue='2019'
@@ -39,6 +46,17 @@ const About = ({advisor, handleYearChange, getObjetivosPorAnio}) => {
                   onClick={getObjetivosPorAnio}
                 >
                   Ver Objetivos
+                </Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Button
+                  variant='raised'
+                  className='jr-btn bg-cyan text-white'
+                  onClick={loadVolumenCarteraPorCvl}
+                >
+                  Ver Cartera
                 </Button>
               </Col>
             </Row>

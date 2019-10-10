@@ -33,3 +33,14 @@ export const getObjetivosFromAdvisorByYear = (cvl, anio) => {
       console.log(err)
     })
 }
+
+export const getVolumenCarteraPorCvl = cvl => {
+  return apiCRM
+    .get(`/advisor/cartera_iban/${cvl}`)
+    .then(res => {
+      return res.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
