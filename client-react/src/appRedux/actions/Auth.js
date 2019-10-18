@@ -8,7 +8,7 @@ import {
   USER_TOKEN_SET,
   SHOW_MESSAGE,
 } from '../../constants/ActionTypes'
-import {apiLogin} from 'util/Api'
+import {apiCRM} from 'util/Api'
 import {
   onLayoutTypeChange,
   onNavStyleChange,
@@ -25,8 +25,8 @@ export const userSignUp = ({email, password, name, username}) => {
   console.log(email, password)
   return dispatch => {
     dispatch({type: FETCH_START})
-    apiLogin
-      .post('auth/signup', {
+    apiCRM
+      .post('/signup', {
         email: email,
         password: password,
         name: name,
@@ -52,19 +52,19 @@ export const userSignUp = ({email, password, name, username}) => {
   }
 }
 
-export const userSignIn = ({username, password}) => {
+export const userSignIn = ({email, password}) => {
   return dispatch => {
     dispatch({type: FETCH_START})
-    apiLogin
-      .post('auth/login', {
-        username: username,
+    apiCRM
+      .post('/login', {
+        email: email,
         password: password,
       })
       .then(({data}) => {
         console.log('userSignIn: ', data)
         if (data.auth) {
           localStorage.setItem('token', JSON.stringify(data.accessToken))
-          apiLogin.defaults.headers.common['access-token'] = data.accessToken
+          apiCRM.defaults.headers.common['access-token'] = data.accessToken
           dispatch({type: FETCH_SUCCESS})
           dispatch({type: USER_TOKEN_SET, payload: data.accessToken})
           dispatch()
@@ -82,8 +82,8 @@ export const userSignIn = ({username, password}) => {
 export const getUser = () => {
   return dispatch => {
     dispatch({type: FETCH_START})
-    apiLogin
-      .post('auth/me')
+    apiCRM
+      .post('/me')
       .then(({data}) => {
         console.log('userSignIn: ', data)
         if (data.user) {
@@ -108,26 +108,5 @@ export const userSignOut = () => {
       dispatch({type: FETCH_SUCCESS})
       dispatch({type: SIGNOUT_USER_SUCCESS})
     }, 2000)
-  }
-}
-
-export const getSettings = () => {
-  return dispatch => {
-    dispatch({type: FETCH_START})
-    apiLogin
-      .post('settings')
-      .then(({data}) => {
-        console.log('settings: ', data)
-        if (data.settings) {
-          dispatch({type: FETCH_SUCCESS})
-          setThemeType(data.settings.themeType)
-        } else {
-          dispatch({type: FETCH_ERROR, payload: data.error})
-        }
-      })
-      .catch(function(error) {
-        dispatch({type: FETCH_ERROR, payload: error.message})
-        console.log('Error****:', error.message)
-      })
   }
 }

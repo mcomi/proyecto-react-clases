@@ -28,7 +28,7 @@ import {
   NAV_STYLE_INSIDE_HEADER_HORIZONTAL,
   THEME_TYPE_DARK,
 } from '../../constants/ThemeSetting'
-import {getUser, getSettings} from '../../appRedux/actions/Auth'
+import {getUser} from '../../appRedux/actions/Auth'
 
 const RestrictedRoute = ({component: Component, token, ...rest}) => (
   <Route
@@ -103,7 +103,6 @@ class App extends Component {
     }
     if (nextProps.token && !nextProps.authUser) {
       this.props.getUser()
-      this.props.getSettings()
     }
   }
 
@@ -166,7 +165,6 @@ export default connect(
   {
     setInitUrl,
     getUser,
-    getSettings,
     setThemeType,
     onNavStyleChange,
     onLayoutTypeChange,

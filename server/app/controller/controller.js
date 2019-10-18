@@ -3,6 +3,7 @@ const config = require('../config/config.js')
 const User = db.user
 const Role = db.role
 const Settings = db.settings
+const Password = require('node-php-password')
 
 const Op = db.Sequelize.Op
 
@@ -42,6 +43,13 @@ exports.signup = (req, res) => {
 }
 
 exports.signin = (req, res) => {
+  var hash = '$2y$10$5I7nsbjyPibVdqJ.KR0W1.viFbE12C75bu0vPT9YapmNGS6PWAQJS'
+
+  if (Password.verify('mateo2553', hash)) {
+    console.log('si sirvio') //Authentication OK
+  } else {
+    console.log('fallo') //Authentication FAILED
+  }
   console.log('Sign-In')
   User.findOne({
     where: {
@@ -53,7 +61,7 @@ exports.signin = (req, res) => {
         return res.status(404).send('User Not Found.')
       }
 
-      var passwordIsValid = bcrypt.compareSync(req.body.password, user.password)
+      var passwordIsValid = Password.verify(req.body.password, user.password)
       if (!passwordIsValid) {
         return res
           .status(401)

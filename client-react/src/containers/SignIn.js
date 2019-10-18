@@ -57,7 +57,7 @@ class SignIn extends React.Component {
                 className='gx-signin-form gx-form-row0'
               >
                 <FormItem>
-                  {getFieldDecorator('username', {
+                  {getFieldDecorator('email', {
                     initialValue: '',
                     rules: [
                       {
@@ -65,7 +65,7 @@ class SignIn extends React.Component {
                         message: 'The input is not valid E-mail!',
                       },
                     ],
-                  })(<Input placeholder='Usuario' />)}
+                  })(<Input placeholder='Email' />)}
                 </FormItem>
                 <FormItem>
                   {getFieldDecorator('password', {
